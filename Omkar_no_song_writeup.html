@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#211319">
+<title>For Omki — A Little World of Us</title>
+<style>
+:root{--night:#211319;--wine:#6e293b;--wine2:#8c4050;--cream:#f7eee5;--paper:#fffaf4;--rose:#d9aeb0;--gold:#c5a477;--ink:#34242a;--muted:#806c6c}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Georgia,'Times New Roman',serif}
+button{font:inherit;-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+a{color:inherit}.topbar{position:sticky;top:0;z-index:20;background:#211319ed;color:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:12px max(18px,calc((100vw - 1050px)/2));backdrop-filter:blur(12px);border-bottom:1px solid #ffffff1a}
+.brand{font:11px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase}.menu{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.menu a{font:10px Arial,sans-serif;text-decoration:none;color:#e8d7ce;padding:8px 9px;border-radius:30px}.menu a:hover{background:#ffffff18}
+.hero{min-height:92svh;background:radial-gradient(ellipse at 50% 38%,#663342 0,#321d26 48%,#211319 80%);color:var(--cream);display:grid;place-items:center;text-align:center;padding:70px 22px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#f5d9c8a0 1px,transparent 1px);background-size:47px 47px;opacity:.24;mask-image:linear-gradient(transparent,black,transparent)}
+.hero-inner{max-width:700px;position:relative;z-index:1}.eyebrow,.kicker{font:10px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.hero h1{font-size:clamp(49px,10vw,94px);line-height:.98;font-weight:normal;margin:24px 0 18px}.hero h1 i{color:#e9c9c1}
+.hero p{max-width:510px;margin:0 auto 28px;color:#e8d8d0;line-height:1.8;font-size:16px}
+.btn{border:1px solid var(--gold);background:var(--cream);color:var(--night);border-radius:50px;padding:14px 22px;font:11px Arial,sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:transform .2s,background .2s;min-height:46px}
+.btn:hover{transform:translateY(-2px);background:white}.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--cream);border-color:#d6b99b}.btn.dark{background:var(--night);color:var(--cream);border-color:var(--night)}
+.scrollhint{margin-top:28px;color:#d4bdb3;font:10px Arial,sans-serif;letter-spacing:2px}
+main{max-width:930px;margin:auto;padding:20px 20px 70px}
+section{padding:65px 0;border-bottom:1px solid #dfcec2}
+h2{font-size:clamp(34px,6vw,51px);font-weight:normal;line-height:1.06;color:var(--night);margin:12px 0 18px}
+.lead{max-width:700px;color:#6d595c;line-height:1.85;font-size:16px}
+.panel{background:var(--paper);border:1px solid #ead9cd;border-radius:20px;padding:clamp(20px,4vw,34px);box-shadow:0 14px 45px #3c20200b}
+.timeline{margin:34px 0 0 8px;border-left:1px solid var(--gold);padding-left:25px}
+.event{position:relative;padding:0 0 29px}.event:last-child{padding-bottom:0}.event:before{content:"";position:absolute;left:-32px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--wine);border:3px solid var(--cream);box-shadow:0 0 0 1px var(--gold)}
+.event small{font:10px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--wine)}
+.event h3{font-size:22px;font-weight:normal;margin:8px 0}.event p{margin:0;color:#6d595c;line-height:1.8}
+.callout{border-left:3px solid var(--wine);padding:12px 17px;background:#f4e8df;margin-top:20px;line-height:1.75;color:#654f54}
+.letter{background:var(--paper);border:1px solid #ead9cd;padding:clamp(22px,4vw,38px);border-radius:18px;line-height:1.95;font-size:16px;box-shadow:0 15px 45px #3c20200b}
+.envelopes,.reasons,.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-top:25px}
+.envelope,.reason,.tile{border:1px solid #e0cbbd;background:#fff8f1;border-radius:16px;padding:17px 13px;text-align:center;color:var(--night);min-height:112px;cursor:pointer;transition:.2s;touch-action:manipulation}
+.envelope:hover,.reason:hover,.tile:hover{transform:translateY(-3px);border-color:var(--wine);box-shadow:0 8px 20px #4d273014}
+.envelope:active,.reason:active,.tile:active{transform:scale(.97)}
+.envelope span,.tile span{display:block;font-size:27px;margin-bottom:10px}.envelope b{font-size:14px;font-weight:normal;line-height:1.4}
+.reveal{display:none;margin-top:17px;padding:21px;background:#f0e1d6;border:1px solid #e2cbbd;border-radius:15px;text-align:center;line-height:1.8;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.reason{min-height:90px;font-size:13px;line-height:1.55}.reason em{font-size:24px;display:block;color:var(--wine);font-style:normal;margin-bottom:5px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px;margin-top:25px}
+.card{background:var(--paper);border:1px solid #ead9cd;border-radius:16px;padding:21px}.card .symbol{font-size:27px}.card h3{font-size:20px;font-weight:normal;margin:10px 0}.card p{font-size:14px;line-height:1.75;color:#6d595c;margin:0}
+.starbox{background:var(--night);color:var(--cream);border-radius:20px;padding:30px 20px;text-align:center;margin-top:25px}.stars{font-size:28px;letter-spacing:9px;color:#e6c7a4;margin:10px}.starbox p{line-height:1.8;color:#e4d1c5}.wish{display:none;color:#f0cda9;font-size:18px;line-height:1.6;margin:20px auto 0;max-width:480px}
+
+.media-tools{margin-top:16px;padding:15px;background:#f4e8df;border:1px dashed #c9aa99;border-radius:14px;text-align:left}
+.media-tools label{display:inline-flex;align-items:center;gap:8px;background:var(--night);color:var(--cream);padding:10px 14px;border-radius:30px;font:10px Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin:4px 5px 8px 0}
+.media-tools input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.media-tools .hint{font:11px Arial,sans-serif;color:#806c6c;line-height:1.5}
+.media-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:9px;margin-top:12px}
+.media-preview figure{margin:0;background:#fffaf4;border:1px solid #e3d1c2;border-radius:10px;padding:7px;overflow:hidden}
+.media-preview img,.media-preview video{display:block;width:100%;max-height:150px;object-fit:cover;border-radius:7px;background:#211319}
+.media-preview figcaption{font:10px Arial,sans-serif;color:#6d595c;overflow-wrap:anywhere;margin-top:5px}
+.envelope-open{display:block;width:100%;border:0;background:transparent;color:inherit;padding:0;cursor:pointer}
+.envelope-open span{display:block;font-size:27px;margin-bottom:10px}
+.envelope-open b{font-size:14px;font-weight:normal;line-height:1.4}
+.future-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.future-list label{display:flex;gap:10px;align-items:flex-start;background:#fff8f1;border:1px solid #ead9cd;padding:13px;border-radius:12px;line-height:1.5;font-size:14px}.future-list input{accent-color:var(--wine);margin-top:3px}
+.final{background:linear-gradient(145deg,#321d26,#211319);color:var(--cream);padding:clamp(25px,5vw,45px);border-radius:22px;line-height:1.95;margin-top:45px}.final h2{color:var(--cream)}.final p{color:#e8d8d0}
+footer{text-align:center;padding:34px 15px;color:#92777a;font:10px Arial,sans-serif;letter-spacing:2px}
+.modalback{position:fixed;inset:0;background:#130b0edb;display:none;place-items:center;padding:20px;z-index:50}.modalback.show{display:grid}.modal{max-width:520px;width:100%;background:var(--cream);border-radius:20px;padding:27px;position:relative;max-height:85svh;overflow:auto}.modal h3{font-size:27px;font-weight:normal;margin:8px 0 12px}.modal p{line-height:1.8;color:#654f54}.close{position:absolute;right:13px;top:12px;border:0;background:#ead9cd;border-radius:50%;width:38px;height:38px;font-size:20px}
+.progress{height:3px;background:#ffffff20;position:fixed;top:0;left:0;z-index:30;width:100%}.progress span{display:block;height:100%;width:0;background:var(--gold)}
+@media(max-width:650px){.topbar{align-items:flex-start;gap:8px;flex-direction:column;padding:10px 14px}.menu{justify-content:flex-start;gap:2px}.menu a{padding:7px;font-size:9px}.hero{min-height:88svh}.hero p{font-size:15px}section{padding:48px 0}.future-list{grid-template-columns:1fr}.lead{font-size:15px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+
+<style>
+.quiz-choice{border:1px solid #cdb9af;background:#fffaf7;color:#513b36;border-radius:30px;padding:12px 17px;font:inherit;font-size:13px;cursor:pointer;transition:.2s}
+.quiz-choice:hover,.quiz-choice.selected{background:#ead8cf;border-color:#9e7568}
+#little-quiz input:focus{outline:2px solid #b88f82;outline-offset:2px}
+</style>
+
+</head>
+<body>
+<div class="progress"><span id="progressBar"></span></div>
+<nav class="topbar">
+ <div class="brand">A little world · for Omki ♡</div>
+ <div class="menu">
+  <a href="#story">Our story</a><a href="#letter">A letter</a><a href="#openwhen">Open when</a><a href="#reasons">Reasons</a><a href="#future">Our future</a>
+ </div>
+</nav>
+<header class="hero" id="home">
+ <div class="hero-inner">
+  <div class="eyebrow">A little something, made with love</div>
+  <h1>To my<br><i>favourite person.</i></h1>
+  <p>Nothing between us has to be perfect. I love our little moments, our laughs, and everything we're still learning about each other. I hope we keep making memories together. ♡</p>
+  <button class="btn" onclick="goTo('story')">Open your little world ♡</button>
+  <div id="songPlayer" style="max-width:390px;margin:24px auto 0;">
+    <iframe id="songFrame" width="100%" height="160" src="https://www.youtube-nocookie.com/embed/8SYPKQMW_2Q?autoplay=1&playsinline=1&rel=0" title="Background music" style="border:0;border-radius:12px;" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <div class="scrollhint">SCROLL SLOWLY · THERE'S MORE INSIDE</div>
+ </div>
+</header>
+<main>
+
+<section id="little-quiz" class="section">
+  <div class="section-label">A LITTLE GAME FOR US</div>
+  <h2>How well do you remember our little moments? ♡</h2>
+  <p class="section-intro">Just two questions about us. No pressure — let's see what you remember. There's a little surprise waiting too. ♡</p>
+  <div class="letter-card" style="max-width:720px;margin:28px auto;padding:clamp(22px,4vw,36px);">
+    <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.65;margin-bottom:12px;">Question 01</div>
+    <h3 style="font-size:clamp(21px,4vw,28px);margin:0 0 12px;">Where did we share that special first kiss?</h3>
+    <p style="margin:0 0 16px;">Type the place here…</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <input id="kissAnswer" type="text" placeholder="Your answer…" style="flex:1;min-width:180px;padding:13px 15px;border-radius:12px;border:1px solid #d8c8c0;background:#fffaf7;color:#352a2a;font:inherit;">
+      <button class="btn" type="button" onclick="checkKissAnswer(event); return false;">Submit ♡</button>
+    </div>
+    <div id="kissFeedback" role="status" aria-live="polite" style="display:none;margin-top:16px;padding:18px 16px;border-radius:14px;background:#f4e9e4;border:1px solid #dfc4b8;line-height:1.7;text-align:center;color:#6e293b;font-size:16px;"></div>
+    <div style="height:1px;background:#dfd0c8;margin:26px 0;"></div>
+    <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.65;margin-bottom:12px;">Question 02</div>
+    <h3 style="font-size:clamp(21px,4vw,28px);margin:0 0 12px;">Which date became our special day?</h3>
+    <div id="anniversaryChoices" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+      <button class="quiz-choice" type="button" onclick="checkAnniversary(event,this,'14 February 2026'); return false;">14 February 2026</button>
+      <button class="quiz-choice" type="button" onclick="checkAnniversary(event,this,'5 April 2026'); return false;">5 April 2026</button>
+      <button class="quiz-choice" type="button" onclick="checkAnniversary(event,this,'5 May 2026'); return false;">5 May 2026</button>
+    </div>
+    <div id="anniversaryFeedback" role="status" aria-live="polite" style="display:none;margin-top:16px;padding:18px 16px;border-radius:14px;background:#f4e9e4;border:1px solid #dfc4b8;line-height:1.7;text-align:center;color:#6e293b;font-size:16px;"></div>
+  </div>
+</section>
+
+<section id="story">
+ <div class="kicker">01 · The chapters so far</div><h2>Our little story</h2>
+ <p class="lead">Our story isn't perfect, but it's ours. From the first little feelings to the memories we've made, every part has brought us here. We're still learning, still growing, and still writing our story.</p>
+ <div class="timeline">
+  <div class="event"><small>Before the beginning</small><h3>How it all started</h3><p>Back then, my life was in a different chapter. I was with Arnav, and somewhere along the way, Omkar and I became close as friends. Feelings grew in a way neither of us had planned. We had let go of expectations, and then I suddenly confessed what I was feeling. Omkar shared his feelings too. What started as friendship slowly became something deeper.</p></div>
+  <div class="event"><small>When things got real</small><h3>You stood by my side</h3><p>When things became difficult, you stood up for me, took my side and carried a lot of the situation on your own shoulders. I remember that effort and the way you stood beside me. It became an important part of how our story began.</p></div>
+  <div class="event"><small>5 April 2026</small><h3>The day we became us</h3><p>That was the day we became us. A simple date, but one I'll always keep close to my heart.</p></div>
+  <div class="event"><small>A memory close to my heart</small><h3>That kiss at Marine Drive</h3><p>The sea, the waves, and that moment with you. I still remember it so clearly. Some memories stay with us without needing a photo.</p></div>
+  <div class="event"><small>The chapters that tested us</small><h3>Arguments & misunderstandings</h3><p>We've had our fights and misunderstandings. Sometimes we speak before we listen. I know I need to do better at hearing you out, and I want us both to try.</p></div>
+  <div class="event"><small>A fear I am learning to handle</small><h3>Trust, overthinking & my reactions</h3><p>Sometimes I overthink and let my fears take over. I know that doesn't make it okay to react badly. I'm trying to handle things better and talk to you instead of letting my thoughts take over.</p></div>
+  <div class="event"><small>A memory that hurt</small><h3>The villa incident</h3><p>At the villa, seeing the photos and videos with another girl — especially the picture where she put her hand in yours for the photo — hurt me and affected my trust. We fought about it, and it felt like a promise had been broken. I don't want to pretend it didn't matter to me. I want us to be able to talk honestly about what happened, what boundaries mean to both of us, and how trust can be rebuilt through actions.</p></div>
+  <div class="event"><small>A birthday I wish I'd handled differently</small><h3>The wish I didn't send</h3><p>The situation involving Saanvi made me angry, and I let that anger decide how I treated your birthday. I didn't wish you, and I know you were alone. My love wasn't missing, but I understand that my actions may have made you feel forgotten. I'm sorry for that.</p></div>
+  <div class="event"><small>Still being written</small><h3>The future I hope for</h3><p>I hope we both do well in life, build our careers, and make a future we feel happy about. And if we keep choosing each other, I hope our families can understand and support us too.</p></div>
+ </div>
+ <div class="callout"><b>What I want us to remember:</b> Trust comes back through little things — being honest, keeping our word, and showing up for each other.</div>
+</section>
+<section id="letter">
+ <div class="kicker">02 · From my heart</div><h2>What I wish I could explain better</h2>
+ <div class="letter">
+  Hey Omki,<br><br>
+  I love you so much. But I know I don't always show it in the right way. I overthink, I get upset, and sometimes I react before I understand what you're trying to say. I'm not making excuses. I know I need to work on that, and I really want to.<br><br>
+  What happened at the villa hurt me. Seeing those photos and videos made me feel unsure and upset. I want you to understand why it affected me. I don't want us to keep fighting about it; I want us to talk honestly and be clear about what feels okay for both of us.<br><br>
+  About your birthday — I was upset and let that feeling decide what I did. I didn't wish you, and I'm sorry. I know that must have hurt. You matter to me, and I should have shown you that, especially on your birthday.<br><br>
+  When I talk about our relationship and our future, it is because I think seriously about us. I think about what could become difficult later. I know my parents and how important it is to me that, if we reach that stage, they can accept you and the future we choose. I want both of us to have good careers, stand on our own feet and build a secure, happy life. I want to be able to proudly say that we built something healthy together. That is my dream, not a pressure I want to put only on you.<br><br>
+  I care about us, and I want this to work in a healthy way. I want us to trust each other, speak calmly, and make space for both our feelings. I'll try to listen better and explain what's hurting me without turning it into a fight. I hope we can both do that for each other.<br><br>
+  We may not agree on everything, and that's okay. I just want us to learn from our mistakes, be kinder during hard moments, and remember that we're on the same team.<br><br>
+  Thank you for being you, and for being part of my life. I love you. I hope I keep showing it better, every day.<br><br>
+  With love,<br><i>Your girl ♡</i>
+ </div>
+ <p class="lead" style="font-size:13px;margin-top:14px">A little reminder: an apology doesn't mean your hurt doesn't matter. Both of your feelings deserve to be heard.</p>
+</section>
+<section id="openwhen">
+ <div class="kicker">03 · Little letters</div><h2>Open when...</h2>
+ <p class="lead">Tap an envelope to open its letter. You can also add a photo or video to each one — a tiny memory that belongs with that message.</p>
+ <div class="envelopes">
+  <div class="envelope"><button class="envelope-open" onclick="openLetter('When you miss me','Even in the middle of an ordinary day, you cross my mind. I hope we get to make more little memories together soon. ♡')"><span>💌</span><b>You miss me</b></button><div class="media-tools"><label>＋ Add photo/video<input type="file" accept="image/*,video/*" multiple onchange="previewMedia(this,'media1')"></label><div class="hint">Choose memories for this letter</div><div class="media-preview" id="media1"></div></div></div>
+  <div class="envelope"><button class="envelope-open" onclick="openLetter('When you feel low','You don’t have to be strong every second. Take a breath, rest and be kind to yourself. I hope tomorrow feels lighter.')"><span>🌙</span><b>You feel low</b></button><div class="media-tools"><label>＋ Add photo/video<input type="file" accept="image/*,video/*" multiple onchange="previewMedia(this,'media2')"></label><div class="hint">Choose memories for this letter</div><div class="media-preview" id="media2"></div></div></div>
+  <div class="envelope"><button class="envelope-open" onclick="openLetter('When you need reassurance','You matter to me. I care about you and about the future we talk about. I want us to show that care through everyday actions, not only words.')"><span>♡</span><b>You need reassurance</b></button><div class="media-tools"><label>＋ Add photo/video<input type="file" accept="image/*,video/*" multiple onchange="previewMedia(this,'media3')"></label><div class="hint">Choose memories for this letter</div><div class="media-preview" id="media3"></div></div></div>
+  <div class="envelope"><button class="envelope-open" onclick="openLetter('When you need a smile','Imagine me trying to act serious and then laughing at something silly. I hope this brings even a tiny smile to your face.')"><span>☀️</span><b>You need a smile</b></button><div class="media-tools"><label>＋ Add photo/video<input type="file" accept="image/*,video/*" multiple onchange="previewMedia(this,'media4')"></label><div class="hint">Choose memories for this letter</div><div class="media-preview" id="media4"></div></div></div>
+  <div class="envelope"><button class="envelope-open" onclick="openLetter('When we are upset with each other','Let’s take a breath before we say things we can’t take back. I want to understand you, and I want you to understand me. We can disagree without disrespecting each other.')"><span>🕊</span><b>We're upset</b></button><div class="media-tools"><label>＋ Add photo/video<input type="file" accept="image/*,video/*" multiple onchange="previewMedia(this,'media5')"></label><div class="hint">Choose memories for this letter</div><div class="media-preview" id="media5"></div></div></div>
+  <div class="envelope"><button class="envelope-open" onclick="openLetter('When you can’t sleep','Put your phone down for a moment, relax your shoulders and let the day go. You deserve a peaceful night. Goodnight, Omki. ♡')"><span>✨</span><b>You can't sleep</b></button><div class="media-tools"><label>＋ Add photo/video<input type="file" accept="image/*,video/*" multiple onchange="previewMedia(this,'media6')"></label><div class="hint">Choose memories for this letter</div><div class="media-preview" id="media6"></div></div></div>
+ </div>
+ <p class="lead" style="font-size:12px;margin-top:16px">Each envelope has its own media area, so you can keep different photos and videos with different letters.</p>
+</section>
+<section id="reasons">
+ <div class="kicker">04 · Little reminders</div><h2>Little things I love about you</h2>
+ <p class="lead">Tap a card to reveal a reason. Add your own personal ones later, too.</p>
+ <div class="reasons" id="reasonsGrid"></div>
+</section>
+<section>
+ <div class="kicker">05 · Our little museum</div><h2>Memories beyond photographs</h2>
+ <p class="lead">We may not have hundreds of photos or videos. That's okay. Some memories live in the details we remember.</p>
+ <div class="cards">
+  <div class="card"><div class="symbol">♡</div><h3>The beginning</h3><p>5 April 2026 — the date our relationship began, and the first page of our story.</p></div>
+  <div class="card"><div class="symbol">🌊</div><h3>Marine Drive</h3><p>That kiss by the sea. A small moment that became a big memory for me.</p></div>
+  <div class="card"><div class="symbol">🌙</div><h3>Late-night talks</h3><p>All the random conversations, sleepy voices and little things we shared.</p></div>
+  <div class="card"><div class="symbol">🛕</div><h3>Siddhivinayak</h3><p>A day from our journey that deserves its own little place here.</p></div>
+ </div>
+</section>
+<section id="future">
+ <div class="kicker">06 · The things I dream of</div><h2>A future we're proud of</h2>
+ <p class="lead">I don't know exactly what the future will look like. I just know these are some of the little things I hope we get to do together.</p>
+ <div class="future-list">
+  <label><input type="checkbox"> Build careers we feel proud of</label>
+  <label><input type="checkbox"> Become financially independent and secure</label>
+  <label><input type="checkbox"> Travel and make new memories</label>
+  <label><input type="checkbox"> Learn to communicate without hurting each other</label>
+  <label><input type="checkbox"> Build trust through honesty and consistency</label>
+  <label><input type="checkbox"> Create a future our families can understand and accept</label>
+ </div>
+ <div class="starbox">
+  <div class="kicker" style="color:var(--gold)">A little wish for you</div>
+  <div class="stars">✦ ⋆ ✧ ♡ ✧ ⋆ ✦</div>
+  <p>Tap the button for a wish I hope comes true for you.</p>
+  <button class="btn" onclick="makeWish()">Make a wish ✨</button>
+  <div class="wish" id="wish"></div>
+ </div>
+</section>
+<div class="final">
+ <div class="kicker">07 · One last thing</div>
+ <h2>To more chapters, Omki.</h2>
+ <p>I can't change the moments I wish I'd handled better. And I won't pretend that the things which hurt me didn't matter. I just want us to be honest, take responsibility, and treat each other with care.</p>
+ <p>I want us to feel safe with each other, talk openly, respect each other, and still laugh at the silliest things. I want us to grow, enjoy life, and make memories we'll talk about years later.</p>
+ <p><i>One day, I hope we'll look back at all these little moments and smile. Until then, let's keep choosing kindness, honesty, and each other. ♡</i></p>
+ <button class="btn ghost" onclick="goTo('home')">Back to the beginning ↑</button>
+</div>
+</main>
+<footer>MADE WITH LOVE · JUST FOR YOU · ♡</footer>
+<div class="modalback" id="modal" onclick="if(event.target===this)closeModal()">
+ <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <button class="close" onclick="closeModal()" aria-label="Close">×</button>
+  <div class="kicker">A little note for you</div><h3 id="modalTitle"></h3><p id="modalText"></p>
+  <button class="btn dark" onclick="closeModal()">Keep this close ♡</button>
+ </div>
+</div>
+<script>
+const reasons=[
+"Because our story matters to me, even when a chapter is difficult.",
+"Because I love hearing about the little things in your day.",
+"Because our random conversations become memories.",
+"Because your silly side makes me smile.",
+"Because I want to keep discovering new things about you.",
+"Because the little moments matter to me.",
+"Because I want to celebrate your wins.",
+"Because I want to understand you better, not just be understood.",
+"Because you have your own place in my heart.",
+"Because I still have so many memories I want us to make.",
+"Because I want us to grow into better versions of ourselves.",
+"Because you are not ordinary to me."
+];
+const grid=document.getElementById('reasonsGrid');
+reasons.forEach((r,i)=>{const b=document.createElement('button');b.className='reason';b.innerHTML='<em>♡</em>Reason '+(i+1)+'<br><small>Tap to open</small>';b.onclick=()=>openLetter('Reason '+(i+1),r);grid.appendChild(b)});
+
+const mediaUrls=[];
+function previewMedia(input,targetId){
+ const box=document.getElementById(targetId);
+ box.innerHTML='';
+ Array.from(input.files||[]).forEach(file=>{
+  const url=URL.createObjectURL(file);mediaUrls.push(url);
+  const fig=document.createElement('figure');
+  let node;
+  if(file.type.startsWith('video/')){node=document.createElement('video');node.src=url;node.controls=true;node.playsInline=true}
+  else if(file.type.startsWith('image/')){node=document.createElement('img');node.src=url;node.alt=file.name}
+  else{return}
+  const cap=document.createElement('figcaption');cap.textContent=file.name;
+  fig.appendChild(node);fig.appendChild(cap);box.appendChild(fig);
+ });
+}
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+function openLetter(title,msg){document.getElementById('modalTitle').textContent=title;document.getElementById('modalText').textContent=msg;document.getElementById('modal').classList.add('show');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('modal').classList.remove('show');document.body.style.overflow=''}
+const wishes=["May you always find reasons to smile.","May life be gentle with your heart.","May your hard work take you somewhere beautiful.","May you feel loved, respected and understood.","May the future bring you peace, purpose and happiness."];
+function makeWish(){const el=document.getElementById('wish');el.textContent=wishes[Math.floor(Math.random()*wishes.length)];el.style.display='block'}
+window.addEventListener('scroll',()=>{const d=document.documentElement;const max=d.scrollHeight-d.clientHeight;document.getElementById('progressBar').style.width=(max>0?d.scrollTop/max*100:0)+'%'});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+<script>
+function showTinyNote() {
+  const notes = [
+    "If I could keep one thing from an ordinary day, it would be a little moment with you. ♡",
+    "You are my favourite person to share random thoughts and silly jokes with.",
+    "No big words today. Just this: I'm happy you're in my life. ❤️",
+    "I hope we get many more sunsets, long talks, and silly memories together."
+  ];
+  const box = document.getElementById('tinyNote');
+  box.textContent = notes[Math.floor(Math.random() * notes.length)];
+  box.style.display = 'block';
+}
+
+function checkKissAnswer(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const field = document.getElementById('kissAnswer');
+  const feedback = document.getElementById('kissFeedback');
+  const answer = field.value.trim().toLowerCase();
+
+  feedback.style.display = 'block';
+
+  if (!answer) {
+    feedback.textContent = 'Answer type kar na, Omki 😛';
+    return false;
+  }
+
+  if (answer.includes('marine') || answer.includes('drive')) {
+    feedback.innerHTML =
+      '<div style="font-size:clamp(25px,5vw,34px);margin-bottom:8px;">Awww, correcttt! 🥹💗</div>' +
+      '<div style="font-size:17px;font-weight:700;">I love youuu, Omkar! ❤️</div>' +
+      '<div style="margin-top:7px;">Marine Drive will always be one of my favourite memories with you.</div>';
+  } else {
+    feedback.textContent = 'Not quiteee 🙈 Hint: samudra, waves ani aapan… Try once more!';
+  }
+
+  return false;
+}
+
+function checkAnniversary(event, button, value) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  document.querySelectorAll('#anniversaryChoices .quiz-choice').forEach(function (b) {
+    b.classList.remove('selected');
+  });
+
+  button.classList.add('selected');
+
+  const feedback = document.getElementById('anniversaryFeedback');
+  feedback.style.display = 'block';
+
+  if (value === '5 April 2026') {
+    feedback.innerHTML =
+      '<div style="font-size:clamp(25px,5vw,34px);margin-bottom:8px;">Awww, correcttt! 🥹💗</div>' +
+      '<div style="font-size:17px;font-weight:700;">I love youuu, Omkar! ❤️</div>' +
+      '<div style="margin-top:7px;">5 April 2026 — our day, the beginning of our little “us”. 🤍</div>';
+  } else {
+    feedback.textContent = 'Nopeee 😌 Think again… 5 April 2026 is our special date!';
+  }
+
+  return false;
+}
+</script>
+</body>
+</html>
